@@ -1,0 +1,23 @@
+name: Update README Activity
+
+on:
+  schedule:
+    - cron: '0 */12 * * *' # 每 12 小時執行一次
+  workflow_dispatch: # 允許手動觸發
+  push:
+    branches:
+      - main # 當有程式碼推送到 main 時也會執行
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Update GitHub Activity
+        uses: jamesgeorge007/github-activity-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+        with:
+          COMMIT_MSG: "docs: auto-update GitHub activity in README"
